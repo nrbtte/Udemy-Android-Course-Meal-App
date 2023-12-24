@@ -72,6 +72,11 @@ dependencies {
     //Coil library to load images from the internet
     implementation("io.coil-kt:coil-compose:2.5.0")
 
+
+    //navigation between views
+    val navVersion = "2.7.6"
+    implementation("androidx.navigation:navigation-compose:$navVersion")
+
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")

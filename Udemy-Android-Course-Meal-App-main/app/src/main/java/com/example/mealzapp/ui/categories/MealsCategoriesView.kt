@@ -1,4 +1,4 @@
-package com.example.mealzapp.ui.meals
+package com.example.mealzapp.ui.categories
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
@@ -13,12 +13,9 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -30,9 +27,8 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import com.example.mealzapp.model.Category
 
-
 @Composable
-fun MealsCategoriesScreen() {
+fun MealsCategoriesView(onClickOpenDetails: (Int) -> Unit) {
     val viewModel : MealsCategoriesVM = viewModel()
     val mealCategories = viewModel.mealCategories
 
@@ -48,36 +44,22 @@ fun MealsCategoriesScreen() {
                 .padding(paddingValues)
         ){
             items(mealCategories.value) { category ->
-                MealCategoryCard(category){}
-
+                MealCategoryCard(category, onClickOpenDetails)
             }
-
         }
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AppBar(title: String) {
-    TopAppBar(
-        title = {
-            Text(text = title)
-        },
-        scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
-    )
-}
-
-
-
-
-@Composable
-fun MealCategoryCard(mealCategory: Category, onClickOpenDetails: () -> Unit) {
+fun MealCategoryCard(mealCategory: Category, onClickOpenDetails: (Int) -> Unit) {
     Card(
         modifier = Modifier
             .padding(16.dp)
             .fillMaxSize()
             .wrapContentHeight(align = Alignment.CenterVertically)
-            .clickable(onClick = { onClickOpenDetails.invoke() }),
+            .clickable {
+                onClickOpenDetails(mealCategory.id)
+            },
         elevation = CardDefaults.cardElevation(defaultElevation = 10.dp))
     {
         Column(
@@ -94,7 +76,7 @@ fun MealCategoryCard(mealCategory: Category, onClickOpenDetails: () -> Unit) {
 }
 
 @Composable
-fun MealCategoryPicture(mealCategory: Category, pictureSize: Dp) {
+fun MealCategoryPicture(mealCategory: Category?, pictureSize: Dp) {
     Card(
         modifier = Modifier.padding(16.dp),
         shape = CircleShape,
@@ -102,7 +84,7 @@ fun MealCategoryPicture(mealCategory: Category, pictureSize: Dp) {
         border = BorderStroke(width = 1.dp, color = Color.LightGray)
     ) {
         AsyncImage(
-            model = mealCategory.imageUrl,
+            model = mealCategory!!.imageUrl,
             contentDescription = "Meal ${mealCategory.name} example picture",
             modifier = Modifier.size(pictureSize),
             contentScale = ContentScale.Crop
