@@ -5,7 +5,6 @@ import com.google.gson.annotations.SerializedName
 //GSON deserialization
 // JSON -> data classes
 
-
 data class MealCategoriesResponse(
     val categories : List<Category>
 )

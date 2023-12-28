@@ -5,11 +5,11 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mealzapp.model.Category
-import com.example.mealzapp.model.MealsRepository
+import com.example.mealzapp.model.MealCategoryRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class MealsCategoriesVM (private val repository: MealsRepository = MealsRepository.getInstance()): ViewModel() {
+class MealsCategoriesVM (private val repository: MealCategoryRepository = MealCategoryRepository.getInstance()): ViewModel() {
     val mealCategories: MutableState<List<Category>> = mutableStateOf(emptyList<Category>())
 
 
@@ -25,14 +25,5 @@ class MealsCategoriesVM (private val repository: MealsRepository = MealsReposito
         return repository.getCategories().categories
     }
 
-    fun filterSelectedCategory(id: Int) : Category {
-        return mealCategories.value.first { category -> category.id == id }
-    }
-
-//    fun setSelectedCategory(id: Int) {
-//        selectedItem = filterSelectedCategory(id)
-//        Log.d("BBBBBBBBBBBBBB", "${selectedItem.id} ${selectedItem.name} ${selectedItem.description}")
-//
-//    }
 
 }

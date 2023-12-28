@@ -27,7 +27,7 @@ fun AndroidApplication() {
                 type = NavType.IntType
             })) { navBackStackEntry ->
                 val detailsViewModel: CategoryDetailsVM = viewModel();
-                CategoryDetailsView(detailsViewModel.mealState.value, navController)
+                CategoryDetailsView(detailsViewModel.mealCategoryState.value, navController)
             }
     }
 }
